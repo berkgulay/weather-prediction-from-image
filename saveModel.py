@@ -1,12 +1,13 @@
 #author: Samet Kalkan
 
 import numpy as np
+import random
 import os
 import PIL.ImageOps
 from keras.preprocessing import image as image_utils
 
 """
-This script does that reads all images in a directory given,
+This script reads all images in a directory given,
 adds it to an array and labels each image, then saves those model. 
 """
 
@@ -18,7 +19,6 @@ train_label = []
 #list of directory of classes in given path
 classesDir = os.listdir(imageRoot)
 
-i = 0
 for cls in classesDir:
     classList = os.listdir(imageRoot + cls + "/") #image list in a class directory
     for imageName in classList:
@@ -28,16 +28,20 @@ for cls in classesDir:
         img = image_utils.img_to_array(img) #converts it to array
 
         train_data.append(img)
-        train_label.append(i)
-    i+=1
+        train_label.append(int(cls))
 
-train_data = np.array(train_data)
+def shuffle(train_data,train_label):
+    temp = list(zip(train_data,train_label))
+    random.shuffle(temp)
 
+    return zip(*temp)
 
 def saveModel(path, model):
     np.save(path,model)
 
-saveModel("../train_data.npy", train_data)
+
+train_data,train_label = shuffle(train_data,train_label)
+saveModel("../train_data.npy", np.array(train_data))
 saveModel("../train_label.npy", np.array(train_label))
 
 

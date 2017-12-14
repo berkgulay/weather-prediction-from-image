@@ -12,19 +12,20 @@ from keras.utils import np_utils
 train_data = np.load("../train_data.npy")
 train_label = np.load("../train_label.npy")
 
-#splits train_data with ratio 1/4
-validation_data = train_data[int(len(train_data)*3/4):]
-validation_label = train_label[int(len(train_data)*3/4):]
+#seperates train_data and validation_data with ratio 1/5
+validation_data = train_data[int(len(train_data)*4/5):]
+validation_label = train_label[int(len(train_data)*4/5):]
+train_data = train_data[0:int(len(train_data)*4/5)]
+train_label = train_label[0:int(len(train_data)*4/5)]
 
 #normalization
 train_data = train_data / 255.0
 validation_data = validation_data / 255.0
 
 #number of class
-num_classes = len(np.unique(train_label))
+num_classes = 5 #Cloudy,Sunny,Rainy,Snowy,Foggy
 
-#One-hot encode target
-#for example if label is 5 converts it [0,0,0,0,1]
+#for example if label is 4 converts it [0,0,0,0,1]
 train_label = np_utils.to_categorical(train_label, num_classes)
 validation_label = np_utils.to_categorical(validation_label, num_classes)
 
