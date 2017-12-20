@@ -17,8 +17,9 @@ def contrast(rgb_image):
     avg_d = sum(d_primes) / len(d_primes)
     avg_b = sum(b_primes) / len(b_primes)
     contrast = avg_d - avg_b
+    normalized_contrast = (contrast) / (255)
 
-    return (contrast,max_b,avg_d,avg_b)
+    return (normalized_contrast,contrast,max_b,avg_d,avg_b)
 
 def brightness(rgb_image):
     brightness_list = []
@@ -31,7 +32,10 @@ def brightness(rgb_image):
             brightness = (0.299 * pixel_r) + (0.587 * pixel_g) + (0.114 * pixel_b)
             brightness_list.append(brightness)
 
-    return (sum(brightness_list)/len(brightness_list))
+    brightness = sum(brightness_list)/len(brightness_list)
+    normalized_brightness = (brightness) / (255)
+
+    return normalized_brightness
 
 
 def haze(contrast,max_b,avg_d,avg_b,lamb=1/3):
@@ -39,7 +43,7 @@ def haze(contrast,max_b,avg_d,avg_b,lamb=1/3):
     x1 = (A - avg_d) / A
     x2 = contrast / A
 
-    haze = math.exp((-0.5 * ((5.1 * x1) + (2.9 * x2))) + 0.2461)
+    haze = math.exp((-0.5 * ((5.1 * x1) + (2.9 * x2))) + 0.2461) #normalized value
 
     return haze
 
@@ -71,9 +75,8 @@ def sharpness(rgb_image):
     dx = np.diff(array)[1:, :]  # remove the first row
     dy = np.diff(array, axis=0)[:, 1:]  # remove the first column
     dnorm = np.sqrt(dx ** 2 + dy ** 2)
+
     sharpness = np.average(dnorm)
+    normalized_sharpness = sharpness / 9
 
-    return sharpness
-
-image = cv2.imread('../DataSets/WarmthOfImage/train/3/79734660.jpg',cv2.IMREAD_COLOR)
-print(intensity_hist(image,230))
+    return normalized_sharpness
