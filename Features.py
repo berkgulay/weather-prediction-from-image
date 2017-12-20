@@ -77,6 +77,6 @@ def sharpness(rgb_image):
     dnorm = np.sqrt(dx ** 2 + dy ** 2)
 
     sharpness = np.average(dnorm)
-    normalized_sharpness = sharpness / 25
+    normalized_sharpness = sharpness / 40
 
     return normalized_sharpness
