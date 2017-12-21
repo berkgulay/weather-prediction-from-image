@@ -12,9 +12,11 @@ def separate_data(_test_data, _test_label, cl):
         if cl == int(_test_label[i]):
             separated_data.append(_test_data[i])
             separated_label.append(cl)
-    return np.array(separated_data), np.array(separated_label), 5
+    return np.array(separated_data), np.array(separated_label)
 
 
+train_data = np.array([])
+test_data = np.array([])
 # loads the data from npy
 data = np.load("../WorkStation/train_data_concat1000.npy")
 data_label = np.load("../WorkStation/train_label_concat1000.npy")
@@ -28,8 +30,8 @@ for train_index, test_index in kf.split(data):
     train_label, test_label = data_label[train_index], data_label[test_index]
 
 # puts all features into a single array
-train_data = train_data.reshape((len(train_data), -1))
-test_data = test_data.reshape((len(test_data), -1))
+train_data_reshaped = train_data.reshape((len(train_data), -1))
+test_data_reshaped = test_data.reshape((len(test_data), -1))
 
 # Create a random forest Classifier. By convention, clf means 'Classifier'
 clf = RandomForestClassifier(bootstrap=True,
@@ -51,17 +53,17 @@ clf = RandomForestClassifier(bootstrap=True,
                              warm_start=False)
 
 # Train the Classifier to take the training features and learn how they relate to the training(the species)
-clf.fit(train_data, train_label)
+clf.fit(train_data_reshaped, train_label)
 
 # makes a list to get each accuracy
-validation_data = [separate_data(test_data, test_label, i) for i in range(5)]
+separated_test_data = [separate_data(test_data_reshaped, test_label, i) for i in range(5)]
 num_of_matches = 0
 num_test_data = 0
 
 # get an accuracy in here
-for j in range(len(validation_data)):
-    feature = validation_data[j][0]  # features of a test image
-    label = validation_data[j][1]  # label of a test image
+for j in range(len(separated_test_data)):
+    feature = separated_test_data[j][0]  # features of a test image
+    label = separated_test_data[j][1]  # label of a test image
     predicted = clf.predict(feature)
     count_for_each = 0
     for i in range(len(predicted)):
