@@ -9,15 +9,6 @@ from keras import regularizers
 
 np.random.seed(0)
 
-def seperateData(v_data, v_label, cl):
-    seperatedData = []
-    seperatedLabel = []
-    for i in range(len(v_data)):
-        if cl==int(v_label[i]):
-            seperatedData.append(v_data[i])
-            seperatedLabel.append(cl)
-    return (np.array(seperatedData), np_utils.to_categorical(np.array(seperatedLabel), 5))
-
 size = 50
 train_data = np.load("data/"+str(size)+"/train_data.npy")
 train_label = np.load("data/"+str(size)+"/train_label.npy")
@@ -42,30 +33,28 @@ model = Sequential()
 #activation: activation function such as "relu","sigmoid"
 model.add(Conv2D(32, kernel_size=(1,1),input_shape=(size, size,3), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Conv2D(32, kernel_size=(3,3), activation='relu'))
+model.add(Conv2D(32, kernel_size=(5,5), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 
 model.add(Flatten())
 
 #beginning of fully connected neural network.
 model.add(Dense(100, activation='relu'))
-model.add(Dropout(0.3))
-
+model.add(Dropout(0.5))
 # Add fully connected layer with a softmax activation function
 model.add(Dense(num_classes, activation='softmax'))
 
 # Compile neural network
 model.compile(loss='categorical_crossentropy', # Cross-entropy
-                optimizer='rmsprop', # Root Mean Square Propagation
+                optimizer='SGD', # Root Mean Square Propagation
                 metrics=['accuracy']) # Accuracy performance metric
 
 
-#begin traing the data
+#begin train the data
 history = model.fit(train_data, # train data
             train_label, # label
-            epochs=100, # Number of epochs
+            epochs=30, # Number of epochs
             verbose=2,
             batch_size=64)
 
-#model.save_weights("modelsCNN/trainedModel.h5",overwrite=True)
-model.save("modelsCNN/trainedModel.h5",overwrite=True)
+model.save("modelsCNN/trainedModel"+str(size)+".h5",overwrite=True)

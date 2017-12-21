@@ -21,7 +21,7 @@ def saveModel(path, model):
     np.save(path,model)
 
 
-imageRoot = "../DataSets/WarmthOfImage/cropped/" #Change this root directory of images to create model for them
+imageRoot = "../cropped100/" #Change this root directory of images to create model for them
 batch_size_for_models = 5000 #5000 sized batch models
 
 
@@ -47,8 +47,8 @@ for cls in classesDir:
 
         if(counter == batch_size_for_models):
             train_data, train_label = shuffle(train_data, train_label)
-            saveModel("../DataSets/WarmthOfImage/models/cropped/train_data"+ str(fc) +".npy", np.array(train_data)) #model root to save image models(image)
-            saveModel("../DataSets/WarmthOfImage/models/cropped/train_label"+ str(fc) +".npy", np.array(train_label)) #model root to save image models(label))
+            saveModel("../models100/train_data"+ str(fc) +".npy", np.array(train_data)) #model root to save image models(image)
+            saveModel("../models100/train_label"+ str(fc) +".npy", np.array(train_label)) #model root to save image models(label))
 
             train_data = []
             train_label = []
@@ -58,8 +58,8 @@ for cls in classesDir:
 
 #rest of images which stays in list , add their models to model root lastly
 if(len(train_data)!=0):
-    train_data,train_label = shuffle(train_data,train_label)
-    saveModel("../DataSets/WarmthOfImage/models/cropped/train_data.npy", np.array(train_data)) #model root to save image models(image)
-    saveModel("../DataSets/WarmthOfImage/models/cropped/train_label.npy", np.array(train_label)) #model root to save image models(label)
+    train_data, train_label = shuffle(train_data,train_label)
+    saveModel("../models100/train_data.npy", np.array(train_data)) #model root to save image models(image)
+    saveModel("../models100/train_label.npy", np.array(train_label)) #model root to save image models(label)
 
 
