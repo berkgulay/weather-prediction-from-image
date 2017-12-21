@@ -3,8 +3,9 @@
 import cv2
 import Features
 import numpy as np
+import os
 
-def describe(image_path,cropped_image_path,cont=True,bright=True,haze=True,sharpness=True,color_hist=True,intensity_hist=True,white_thresh = 175):
+def describe(image_path,cropped_image_path,cont,bright,haze,sharpness,color_hist,intensity_hist,white_thresh):
     image = cv2.imread(image_path, cv2.IMREAD_COLOR)
     cropped_image_rgb = cv2.imread(cropped_image_path, cv2.IMREAD_COLOR)
 
@@ -30,3 +31,30 @@ def describe(image_path,cropped_image_path,cont=True,bright=True,haze=True,sharp
         description_array = np.append(description_array, [intensity], axis=0)
 
     return description_array
+
+
+def create_features(standart_image_dir,cropped_image_dir,dest,cont=True,bright=True,haze=True,sharpness=True,color_hist=True,intensity_hist=True,white_thresh = 175):
+
+    img_features = []
+    img_labels = []
+
+    for dir_name in os.listdir(standart_image_dir):
+        for image_name in os.listdir(standart_image_dir+'/'+dir_name+'/'):
+            if(image_name[-4:]=='.jpg'):
+                std_img_path = standart_image_dir+'/'+dir_name+'/'+image_name
+                cropped_img_path = cropped_image_dir+'/'+dir_name+'/'+image_name
+
+                img_feature = describe(std_img_path,cropped_img_path,cont,bright,haze,sharpness,color_hist,intensity_hist,white_thresh)
+                img_label = [int(dir_name)]
+
+                img_features.append(img_feature)
+                img_labels.append(img_label)
+
+    img_features = np.array(img_features)
+    img_labels = np.array(img_labels)
+
+    np.save(dest+'/features.npy',img_features)
+    np.save(dest+'/labels.npy',img_labels)
+
+    return (np.shape(img_features),np.shape(img_labels))
+
