@@ -44,12 +44,12 @@ num_test_data = 0
 
 # get an accuracy in here
 for j in range(len(separated_test_data)):
-    v_data = separated_test_data[j][0]  # features of a test image
-    v_label = separated_test_data[j][1]  # label of a test image
-    predicted = estimator.predict(v_data)
+    test_feature = separated_test_data[j][0]  # features of a test image
+    test_label = separated_test_data[j][1]  # label of a test image
+    predicted = estimator.predict(test_feature)
     count_for_each = 0
     for i in range(len(predicted)):
-        if predicted[i] == v_label[i]:
+        if predicted[i] == test_label[i]:
             count_for_each += 1
             num_of_matches += 1
         num_test_data += 1

@@ -62,12 +62,12 @@ num_test_data = 0
 
 # get an accuracy in here
 for j in range(len(separated_test_data)):
-    feature = separated_test_data[j][0]  # features of a test image
-    label = separated_test_data[j][1]  # label of a test image
-    predicted = clf.predict(feature)
+    test_feature = separated_test_data[j][0]  # features of a test image
+    test_label = separated_test_data[j][1]  # label of a test image
+    predicted = clf.predict(test_feature)
     count_for_each = 0
     for i in range(len(predicted)):
-        if predicted[i] == label[i]:
+        if predicted[i] == test_label[i]:
             count_for_each += 1
             num_of_matches += 1
         num_test_data += 1
