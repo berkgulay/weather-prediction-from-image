@@ -9,10 +9,9 @@ from keras import regularizers
 
 np.random.seed(0)
 
-size = 50
-train_data = np.load("data/"+str(size)+"/train_data.npy")
-train_label = np.load("data/"+str(size)+"/train_label.npy")
-
+train_data = np.load("../concat100/train_data.npy")
+train_label = np.load("../concat100/train_label.npy")
+size = train_data.shape[1]
 #normalization
 train_data = train_data / 255.0
 
@@ -46,15 +45,25 @@ model.add(Dense(num_classes, activation='softmax'))
 
 # Compile neural network
 model.compile(loss='categorical_crossentropy', # Cross-entropy
-                optimizer='SGD', # Root Mean Square Propagation
+                optimizer='rmsprop', # Root Mean Square Propagation
                 metrics=['accuracy']) # Accuracy performance metric
 
 
 #begin train the data
 history = model.fit(train_data, # train data
             train_label, # label
-            epochs=30, # Number of epochs
+            epochs=40, # Number of epochs
             verbose=2,
             batch_size=64)
 
-model.save("modelsCNN/trainedModel"+str(size)+".h5",overwrite=True)
+model.save("modelsCNN/size100/trainedModelE10.h5",overwrite=True)
+
+
+"""
+plt.plot(y.history['loss'])
+plt.title('model loss')
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(['train', 'test'], loc='upper left')
+plt.show()
+"""
