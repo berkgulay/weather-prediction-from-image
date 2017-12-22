@@ -3,6 +3,7 @@
 from sklearn import svm
 import numpy as np
 from sklearn.model_selection import KFold
+import random
 
 # This function seperates into sub classes for getting accuracy for each classes
 def separate_test_data(test_data, test_label):
@@ -65,12 +66,24 @@ def k_fold(data,data_label,fold_num):
             test_data,
             test_label)
 
+def shuffle(train_data,train_label):
+    temp = list(zip(train_data,train_label))
+    random.shuffle(temp)
+
+    return zip(*temp)
+
 
 data = np.load('../DataSets/WarmthOfImage/SVM-DT/features_labels/features.npy')
 data_label = np.load('../DataSets/WarmthOfImage/SVM-DT/features_labels/labels.npy')
 data_label = np.reshape(data_label,(np.shape(data)[0],))
 
-train_data,train_label,test_data,test_label = k_fold(data,data_label,10)
+#Shuffle:
+data , data_label = shuffle(data,data_label)
+
+data = np.array(data)
+data_label = np.array(data_label)
+
+#train_data,train_label,test_data,test_label = k_fold(data,data_label,10)
 
 
 #try gamma = 3 or 2 and 0.2 or 0.1 , kernel= polynomial with degree 3,5,7,10 coef0 as 0,10,100
@@ -80,12 +93,12 @@ train_data,train_label,test_data,test_label = k_fold(data,data_label,10)
 #try class_weight as default
 #try with no shrink (default with shrink change it)
 svc = svm.SVC(kernel='rbf',gamma=0.5,C=1.2,class_weight='balanced',max_iter=500,decision_function_shape='ovr',tol=0.001,cache_size=1000,probability=True)
-svc.fit(train_data,train_label)
+svc.fit(data[0:-1200],data_label[0:-1200])
 
 
 # makes a list for each class seperately to get each accuracy of them
-splitted_test = separate_test_data(test_data, test_label)
-validation_data = [ (splitted_test[t],splitted_test[t+1]) for t in range(0,10,2)]
+splitted_test = separate_test_data(data[-1200:], data_label[-1200:])
+validation_data = [(splitted_test[t],splitted_test[t+1]) for t in range(0,10,2)]
 
 
 
@@ -95,6 +108,7 @@ num_test_data = 0
 for j in range(len(validation_data)):
     features_for_class = validation_data[j][0]  # features of a test image
     labels_for_class = validation_data[j][1]  # label of a test image
+
     predicted = svc.predict(features_for_class)
 
     count_for_each = 0
