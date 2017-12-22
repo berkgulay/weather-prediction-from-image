@@ -18,9 +18,13 @@ def separate_data(_test_data, _test_label, cl):
 train_data = np.array([])
 test_data = np.array([])
 # loads the data from npy
-data = np.load("../WorkStation/train_data_concat1000.npy")
-data_label = np.load("../WorkStation/train_label_concat1000.npy")
 
+data = np.load('../WorkStation/features.npy')
+data_label = np.load('../WorkStation/labels.npy')
+data_label = np.reshape(data_label,(np.shape(data)[0],))
+"""data = np.load("../WorkStation/train_data_concat1000.npy")
+data_label = np.load("../WorkStation/train_label_concat1000.npy")
+"""
 # K-fold splits into 10 and shuffles the indexes
 kf = KFold(n_splits=10, shuffle=True)
 kf.get_n_splits(data)
