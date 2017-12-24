@@ -26,12 +26,12 @@ validation_label = np_utils.to_categorical(validation_label, num_classes)
 
 
 # loads trained model and architecture
-model = load_model("modelsCNN/size100/trainedModelE40.h5")
+model = load_model("modelsCNN/size100/trainedModelE20.h5")
 
 
 # -------predicting part-------
-y = model.predict_classes(validation_data,verbose=0)
-acc = T.get_accuracy_of_class(validation_label, y)
+y = model.predict_classes(validation_data, verbose=0)
+acc = T.get_accuracy_of_class(T.binary_to_class(validation_label), y)
 print("General Accuracy for Validation Data:", acc)
 print("-----------------------------")
 
@@ -42,4 +42,8 @@ for i in range(len(vd)):
     acc = T.get_accuracy_of_class(v_label, y)
     print("Accuracy for class " + str(i) + ": ", acc)
     print("-----------------------------")
+
+
+
+
 

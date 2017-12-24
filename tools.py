@@ -10,6 +10,16 @@ import os
 from keras.preprocessing import image as image_utils
 
 
+def binary_to_class(label):
+    """ Converts a binary class matrix to class vector(integer)
+        # Arguments:
+            label: matrix to be converted to class vector
+    """
+    new_lbl = []
+    for i in range(len(label)):
+        new_lbl.append(np.argmax(label[i]))
+    return new_lbl
+
 def get_accuracy_of_class(v_label, y):
     """
         Returns:
