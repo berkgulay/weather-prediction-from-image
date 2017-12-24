@@ -4,7 +4,6 @@ from sklearn.model_selection import KFold
 from sklearn.tree import DecisionTreeClassifier, tree
 
 
-
 # This function seperates into sub classes for getting accuracy for each classes
 def separate_data(_test_data, _test_label, class_num):
     separated_data = []
@@ -30,22 +29,22 @@ def get_accuracy():
                 count_for_each += 1
                 num_of_matches += 1
             num_test_data += 1
-        if j == 0:# Cloudy
+        if j == 0:  # Cloudy
             cloudy_acc = count_for_each / len(predicted)
             print("Accuracy for cloudy class : ", count_for_each / len(predicted))
-        elif j == 1:# Sunny
+        elif j == 1:  # Sunny
             sunny_acc = count_for_each / len(predicted)
             print("Accuracy for sunny class : ", count_for_each / len(predicted))
 
-        elif j == 2:# Rainy
+        elif j == 2:  # Rainy
             rainy_acc = count_for_each / len(predicted)
             print("Accuracy for rainy class : ", count_for_each / len(predicted))
 
-        elif j == 3:# Snowy
+        elif j == 3:  # Snowy
             snowy_acc = count_for_each / len(predicted)
             print("Accuracy for snowy class : ", count_for_each / len(predicted))
 
-        elif j == 4:# Foggy
+        elif j == 4:  # Foggy
             foggy_acc = count_for_each / len(predicted)
             print("Accuracy for foggy class : ", count_for_each / len(predicted))
 
@@ -80,7 +79,7 @@ for train_index, test_index in kf.split(data):
     test_data_reshaped = test_data.reshape((len(test_data), -1))
 
     # Create a Decision Tree Classifier.
-    clf = DecisionTreeClassifier(max_leaf_nodes=50, random_state=None)
+    clf = DecisionTreeClassifier(max_leaf_nodes=40, min_samples_leaf=20, max_depth=20, random_state=None)
     clf.fit(train_data_reshaped, train_label)
 
     # makes a list to get each accuracy
@@ -99,4 +98,3 @@ print("Overall Accuracy For Rainy Class :", rainy_accuracy / split_size)
 print("Overall Accuracy For Snowy Class :", snowy_accuracy / split_size)
 print("Overall Accuracy For Foggy Class :", foggy_accuracy / split_size)
 print("Overall Accuracy: ", total_accuracy / split_size)
-
