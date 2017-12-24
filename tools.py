@@ -20,7 +20,7 @@ def get_accuracy_of_class(v_label, y):
     """
     c = 0
     for i in range(len(y)):
-        if y[i] == np.argmax(v_label[i]):
+        if y[i] == v_label[i]:
             c += 1
     return c / len(y)
 
@@ -33,14 +33,14 @@ def separate_data(v_data, v_label):
         Returns:
             an array that stores '[val_data,val_label]' in each index for each class.
     """
-    vd = [[[], []] for _ in range(5)]
+    vd = [ [[], []] for _ in range(5)]
     for i in range(len(v_data)):
         cls = int(v_label[i])
         vd[cls][0].append(v_data[i])
         vd[cls][1].append(cls)
     for i in range(5):
         vd[i][0] = np.array(vd[i][0])
-        vd[i][1] = np_utils.to_categorical(np.array(vd[i][1]))
+        vd[i][1] = np.array(vd[i][1])
     return vd
 
 
