@@ -2,6 +2,8 @@
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import KFold
 import numpy as np
+import graphviz
+from sklearn import tree
 
 
 # This function seperates into sub classes for getting accuracy for each classes
@@ -30,7 +32,7 @@ def get_accuracy():
                 num_of_matches += 1
             num_test_data += 1
         if j == 0:
-            cloudy_acc =count_for_each / len(predicted)
+            cloudy_acc = count_for_each / len(predicted)
             print("Accuracy for cloudy class : ", count_for_each / len(predicted))
         elif j == 1:
             sunny_acc = count_for_each / len(predicted)
@@ -71,7 +73,6 @@ split_size = 10
 kf = KFold(n_splits=split_size, shuffle=True)
 kf.get_n_splits(data)
 
-
 for train_index, test_index in kf.split(data):
     # print("TRAIN:", train_index, "TEST:", test_index)
     train_data, test_data = data[train_index], data[test_index]
@@ -82,23 +83,11 @@ for train_index, test_index in kf.split(data):
     test_data_reshaped = test_data.reshape((len(test_data), -1))
 
     # Create a random forest Classifier. By convention, clf means 'Classifier'
-    clf = RandomForestClassifier(bootstrap=True,
-                                 class_weight='balanced_subsample',
-                                 criterion="gini",
-                                 max_depth=None,
-                                 max_features='auto',
-                                 max_leaf_nodes=20,
-                                 min_impurity_decrease=0.0,
-                                 min_impurity_split=None,
-                                 min_samples_leaf=1,
-                                 min_samples_split=2,
+    clf = RandomForestClassifier(bootstrap=False,
+                                 max_leaf_nodes=None,
+                                 n_estimators=2,  # The number of trees in the forest
                                  min_weight_fraction_leaf=0.0,
-                                 n_estimators=50,  # The number of trees in the forest
-                                 n_jobs=1,
-                                 oob_score=False,
-                                 random_state=None,
-                                 verbose=0,
-                                 warm_start=False)
+                                 )
 
     # Train the Classifier to take the training features and learn how they relate to the training(the species)
     clf.fit(train_data_reshaped, train_label)
@@ -119,3 +108,16 @@ print("Overall Accuracy For Rainy Class :", rainy_accuracy / split_size)
 print("Overall Accuracy For Snowy Class :", snowy_accuracy / split_size)
 print("Overall Accuracy For Foggy Class :", foggy_accuracy / split_size)
 print("Overall Accuracy: ", total_accuracy / split_size)
+import pydotplus
+import six
+import os
+from sklearn import tree
+dotfile = six.StringIO()
+i_tree = 0
+for tree_in_forest in clf.estimators_:
+    if (i_tree <1):
+        tree.export_graphviz(tree_in_forest,
+                             )
+
+        i_tree = i_tree + 1
+os.system('dot -Tpng tree.dot -o tree.png')

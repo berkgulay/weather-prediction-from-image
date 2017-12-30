@@ -1,8 +1,11 @@
 # author: Mert Surucuoglu
 import numpy as np
 from sklearn.model_selection import KFold
-from sklearn.tree import DecisionTreeClassifier, tree
-
+from sklearn.tree import DecisionTreeClassifier
+from graphviz import Source
+from sklearn import tree
+import os
+os.environ["PATH"] += os.pathsep + 'C:/Users/Mert/Desktop/graphviz-2.38/release/bin'
 
 # This function seperates into sub classes for getting accuracy for each classes
 def separate_data(_test_data, _test_label, class_num):
@@ -79,7 +82,7 @@ for train_index, test_index in kf.split(data):
     test_data_reshaped = test_data.reshape((len(test_data), -1))
 
     # Create a Decision Tree Classifier.
-    clf = DecisionTreeClassifier(max_leaf_nodes=40, min_samples_leaf=20, max_depth=20, random_state=None)
+    clf = DecisionTreeClassifier(max_leaf_nodes=5,min_samples_split=2, random_state=None)
     clf.fit(train_data_reshaped, train_label)
 
     # makes a list to get each accuracy
@@ -98,3 +101,6 @@ print("Overall Accuracy For Rainy Class :", rainy_accuracy / split_size)
 print("Overall Accuracy For Snowy Class :", snowy_accuracy / split_size)
 print("Overall Accuracy For Foggy Class :", foggy_accuracy / split_size)
 print("Overall Accuracy: ", total_accuracy / split_size)
+dot_data = tree.export_graphviz(clf, out_file=None)
+graph = Source(dot_data)
+#graph.render('Decision-Tree3')
