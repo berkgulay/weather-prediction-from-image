@@ -5,7 +5,7 @@ import Features
 import numpy as np
 import os
 
-def describe(image_path,cropped_image_path,cont,bright,haze,sharpness,color_hist,intensity_hist,white_thresh):
+def describe(image_path,cropped_image_path,cont=True,bright=True,haze=True,sharpness=True,color_hist=True,intensity_hist=True,white_thresh=175):
     image = cv2.imread(image_path, cv2.IMREAD_COLOR)
     cropped_image_rgb = cv2.imread(cropped_image_path, cv2.IMREAD_COLOR)
 
@@ -40,9 +40,12 @@ def create_features(standart_image_dir,cropped_image_dir,dest,cont=True,bright=T
     fc = 1
 
     dirs = os.listdir(standart_image_dir)
+    i=0
     for dir_name in dirs:
         class_images = os.listdir(standart_image_dir+'/'+dir_name+'/')
         for image_name in class_images:
+            i+=1
+            print(i)
             if(image_name[-4:]=='.jpg'): # if image extension is jpg
                 std_img_path = standart_image_dir+'/'+dir_name+'/'+image_name
                 cropped_img_path = cropped_image_dir+'/'+dir_name+'/'+image_name

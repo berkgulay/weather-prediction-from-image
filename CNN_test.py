@@ -38,12 +38,7 @@ print("-----------------------------")
 for i in range(len(vd)):
     v_data = vd[i][0]
     v_label = vd[i][1]
-    y = model.predict_classes(v_data,verbose=0)
+    y = model.predict_classes(v_data, verbose=0)
     acc = T.get_accuracy_of_class(v_label, y)
-    print("Accuracy for class " + str(i) + ": ", acc)
+    print("Accuracy for class " + T.classes[i] + ": ", acc)
     print("-----------------------------")
-
-
-
-
-
