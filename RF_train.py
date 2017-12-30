@@ -108,7 +108,7 @@ print("Overall Accuracy For Rainy Class :", rainy_accuracy / split_size)
 print("Overall Accuracy For Snowy Class :", snowy_accuracy / split_size)
 print("Overall Accuracy For Foggy Class :", foggy_accuracy / split_size)
 print("Overall Accuracy: ", total_accuracy / split_size)
-import pydotplus
+
 import six
 import os
 from sklearn import tree
