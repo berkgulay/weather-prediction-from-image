@@ -9,6 +9,7 @@ import PIL.ImageOps
 import os
 from keras.preprocessing import image as image_utils
 
+classes = ["Cloudy","Sunny","Rainy","Snowy","Foggy"]
 
 def binary_to_class(label):
     """ Converts a binary class matrix to class vector(integer)
@@ -92,26 +93,25 @@ def resize_image(base_size, path_of_image, destination, new_image_name):
         img.save(destination + '/' + new_image_name)
 
 
-def prepare_data_set():
+def prepare_data_set(path, dest, size):
     # root directory for source images(which will be cropped)
-    path = '../train/1/'
+    #path = '../train/1/'
     # root directory as destination to save cropped images(Prepared images will be saved in here)
-    dest = '../cropped100/1'
+    #dest = '../cropped100/1'
 
     for filename in os.listdir(path):
-        resize_image(100,  # crop size for all images (just change it to define crop size)
+        resize_image(size,  # crop size for all images (just change it to define crop size)
                      path + filename,
                      dest,
                      filename)
 
-
-def image_to_matrix():
+def image_to_matrix(image_root, dest, size):
     """
         reads all images in a directory given,
         adds it to an array and labels each image, then saves those model.
     """
 
-    image_root = "../cropped100/"  # Change this root directory of images to create model for them
+    #image_root = "../cropped100/"  # Change this root directory of images to create model for them
     batch_size_for_models = 5000  # 5000 sized batch models
 
     train_data = []
@@ -127,7 +127,7 @@ def image_to_matrix():
         for imageName in class_list:
             counter += 1
 
-            img = image_utils.load_img(image_root + cls + "/" + imageName, target_size=(200, 200))  # open an image
+            img = image_utils.load_img(image_root + cls + "/" + imageName, target_size=(size, size))  # open an image
             img = PIL.ImageOps.invert(img)  # inverts it
             img = image_utils.img_to_array(img)  # converts it to array
 
@@ -136,9 +136,9 @@ def image_to_matrix():
 
             if counter == batch_size_for_models:
                 train_data, train_label = shuffle(train_data, train_label)
-                np.save("../models100/train_data" + str(fc) + ".npy",
+                np.save(dest+"train_data" + str(fc) + ".npy",
                         np.array(train_data))  # model root to save image models(image)
-                np.save("../models100/train_label" + str(fc) + ".npy",
+                np.save(dest+"train_label" + str(fc) + ".npy",
                         np.array(train_label))  # model root to save image models(label))
 
                 train_data = []
@@ -149,8 +149,8 @@ def image_to_matrix():
     # rest of images which stays in list , add their models to model root lastly
     if len(train_data) != 0:
         train_data, train_label = shuffle(train_data, train_label)
-        np.save("../models100/train_data.npy", np.array(train_data))  # model root to save image models(image)
-        np.save("../models100/train_label.npy", np.array(train_label))  # model root to save image models(label)
+        np.save(dest+"train_data.npy", np.array(train_data))  # model root to save image models(image)
+        np.save(dest+"train_label.npy", np.array(train_label))  # model root to save image models(label)
 
 
 def shuffle(data, label):
