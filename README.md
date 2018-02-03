@@ -1,7 +1,7 @@
 # Weather Prediction From Image - (Warmth Of Image)
 
 
-![Our Predictions](https://drive.google.com/open?id=1fHvAIEly7ZoZetNxJ-tr1f2ihu9o1j0v)
+![Our Predictions](https://ibb.co/jC5tb6)
 
 **Project Topic:** Weather Condition Prediction from Image
 
