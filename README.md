@@ -10,8 +10,8 @@
 
 **Project Members:** 
 - [Berk Gulay](https://www.linkedin.com/in/berk-gulay97/)
-- [Samet Kalkan](https://www.linkedin.com/in/mertsurucuoglu/)
-- [Mert Surucuoglu](https://www.linkedin.com/in/kalkan44/)
+- [Samet Kalkan](https://www.linkedin.com/in/kalkan44/)
+- [Mert Surucuoglu](https://www.linkedin.com/in/mertsurucuoglu/)
 
 **Institution-Department:** Hacettepe University - Computer Science
 
