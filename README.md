@@ -15,8 +15,8 @@
 
 **Institution-Department:** Hacettepe University - Computer Science
 
-
-You're very welcome to check introductory informations and details of our project by visiting below links :)
+**You can find links to dataset of our work and proper explanations in open issues :) **
+You're very welcome to check introductory informations and details of our project by visiting links below :)
 
 [Project's Final Report -->](https://drive.google.com/open?id=1HFyAUvnkS61Xat9cUBAhG-4hvwR1T8lb)
 
