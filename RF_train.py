@@ -38,7 +38,6 @@ for train_index, test_index in kf.split(data):
     # makes a list to get each accuracy
     separated_test_data = T.separate_data(test_data_reshaped,test_label)
     # to get a accuracy
-    print("Fold:",)
     for i in range(len(separated_test_data)):
         v_data = separated_test_data[i][0]
         v_label = separated_test_data[i][1]
