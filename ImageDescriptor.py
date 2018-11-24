@@ -9,7 +9,7 @@ def describe(image_path,cropped_image_path,cont=True,bright=True,haze=True,sharp
     image = cv2.imread(image_path, cv2.IMREAD_COLOR)
     cropped_image_rgb = cv2.imread(cropped_image_path, cv2.IMREAD_COLOR)
 
-    description_array = np.reshape(cropped_image_rgb,(np.size(cropped_image_rgb)))
+    description_array = np.reshape(cropped_image_rgb,(np.size(cropped_image_rgb))) / 255
 
     (norm_cont,c,max_b,avg_d,avg_b) = Features.contrast(image)
     if(cont == True):
