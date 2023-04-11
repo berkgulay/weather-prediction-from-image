@@ -24,8 +24,6 @@ You're very welcome to check introductory informations and details of our projec
 
 [Our Medium Blog -->](https://medium.com/warmthofimage)
 
-[Android Application -->](https://play.google.com/store/apps/details?id=com.kalkan.weatherprediction)
-
 
 **DATASET:**
 
