@@ -29,7 +29,6 @@ You're very welcome to check introductory informations and details of our projec
 
 [Class 0 -->](https://drive.google.com/open?id=1j9nLFoAA5xxC5DplQd-mgbysVsMcJEcz)
 
-[Class 1 -->](https://drive.google.com/open?id=1KO0ryOH6j4pFYTJpSyGxL1iH1f84dNU7)
-
 [Class 2,3,4 -->](https://drive.google.com/open?id=1MWLGbv82_aEZo3h84pQAMRHkvCvsWSkA)
 
+*- Class 1 of the dataset is missing, since its resources got irrevocably removed from the drive by a colleague*
